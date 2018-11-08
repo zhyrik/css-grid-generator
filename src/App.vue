@@ -72,6 +72,17 @@
       </div>
       <div class="items" v-for="(item, index) in countItems" :key="index"></div>
     </div>
+
+    <div class="modal" v-if="modal">
+      <div v-text="modalText"></div>
+      <div>
+        <button @click="modal=!modal">close</button>
+        <a href="https://github.com/zhyrik/css-grid-generator"
+          target="_blank"
+          class="button"
+        >support project add star on github</a>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -87,7 +98,9 @@ export default {
       row: [],
       order: [],
       itemsStyle: [],
-      itemsInput: [true, false, false]
+      itemsInput: [true, false, false],
+      modal: false,
+      modalText: ''
     }
   },
   methods: {
@@ -105,17 +118,24 @@ export default {
       }
     },
     getCode () {
-      console.log(this.itemsStyle)
+      let container = `
+  .container{
+  \t'grid-template-columns': ${this.columns},
+  \t'grid-template-rows': ${this.rows},
+  \t'grid-gap': ${this.gap}
+  } \n`
       let items = ''
       for(let i = 0; i < this.itemsStyle.length; i++) {
         if(this.itemsStyle[i]) {
           items += '\n item' + i + " {"
-          if(this.itemsStyle[i]['grid-column'] !== undefined) items += '\n grid-column: ' + this.itemsStyle[i]['grid-column'] + ';'
-          if(this.itemsStyle[i]['grid-row'] !== undefined) items += '\n grid-row: ' + this.itemsStyle[i]['grid-row'] + ';'
-          if(this.itemsStyle[i]['order'] !== undefined) items += '\n order: ' + this.itemsStyle[i]['order'] + ';'
+          if(this.itemsStyle[i]['grid-column'] !== undefined) items += '\n \tgrid-column: ' + this.itemsStyle[i]['grid-column'] + ';'
+          if(this.itemsStyle[i]['grid-row'] !== undefined) items += '\n \tgrid-row: ' + this.itemsStyle[i]['grid-row'] + ';'
+          if(this.itemsStyle[i]['order'] !== undefined) items += '\n \torder: ' + this.itemsStyle[i]['order'] + ';'
           items += '\n }'
         }
       }
+      this.modalText = container + items
+      this.modal = !this.modal
       console.log(this.container, items)
     }
   },
@@ -176,7 +196,7 @@ h4{
   display: grid;
 }
 .container-relative{
-  background: red;
+  background: rgba(221, 160, 74, 0.952);
   overflow: hidden;
   position: relative;
   border: 2px solid black;
@@ -198,6 +218,10 @@ h4{
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: all 0.3s;
+}
+.items-green:hover{
+  background: greenyellow;
 }
 input{
   width: 300px;
@@ -222,5 +246,34 @@ label{
 }
 span{
   margin-top: 10px;
+}
+.modal{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(226, 216, 202, 0.952);
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+}
+.modal div{
+  white-space: pre;
+}
+button, .button{
+  border: 2px solid black;
+  cursor: pointer;
+  padding: 10px 40px;
+  margin: 0 auto;
+  text-transform: uppercase;
+  background: rgba(221, 160, 74, 0.952);
+  font-size: 16px;
+  text-decoration: none;
+  color: black;
+  margin: 10px; 
+}
+button:hover, .button:hover{
+  background: rgba(224, 192, 146, 0.952);
 }
 </style>
