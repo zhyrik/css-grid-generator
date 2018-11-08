@@ -2,25 +2,62 @@
   <div id="app">
 
     <div class="writen-wrap">
-      <label for="colums">grid-template-columns (px, %, fr, repeat(n, %)</label>
-      <input type="text" v-model="columns" id="columns">
+      <div class="writen-wrap__container">
+        <h4>.container</h4>
+        <div>
+          <label for="columns">grid-template-columns</label>
+          <input
+            type="text"
+            v-model.trim="columns"
+            id="columns"
+            title="px, %, fr, em, auto, repeat(n, fr), min-content, max-content, minmax">
+        </div>
 
-      <label for="rovs">grid-template-rows</label>
-      <input type="text" v-model="rows" id="rows">
+        <div>
+          <label for="rows">grid-template-rows</label>
+          <input
+            type="text"
+            v-model.trim="rows"
+            id="rows"
+            title="px, %, fr, em, auto, repeat(n, fr), min-content, max-content, minmax">
+        </div>
 
-      <label for="gap">grid-gap</label>
-      <input type="text" v-model="gap" id="gap">
+        <div>
+          <label for="gap">grid-gap</label>
+          <input
+            type="text"
+            v-model.trim="gap"
+            id="gap"
+            title="px, %, fr, em, auto">
+        </div>
+      </div>
 
-      <label for="items">Items</label>
+      <label for="items">Create items (max {{countItems}})</label>
       <input type="number" v-model="items" id="items">
 
-      <div class="items-imput" v-for="item in numberItems" :key="item" v-if="itemsInput[item-1]">
-        <label for="column">grid-column</label>
-        <input type="text" v-model="column[item-1]" id="column" @input="pushItemStyle(item-1)">
+      <span>Click on the green block for change number item</span>
+      <div class="writen-wrap__item" v-for="item in numberItems" :key="item" v-if="itemsInput[item-1]">
+        <h4>.item{{item}}</h4>
+        <div>
+          <label for="column">grid-column</label>
+          <input type="text" v-model="column[item-1]" id="column" @input="pushItemStyle(item-1)">
+        </div>
 
-        <label for="row">grid-row</label>
-        <input type="text" v-model="row[item-1]" id="row" @input="pushItemStyle(item-1)">
+        <div>
+          <label for="row">grid-row</label>
+          <input type="text" v-model="row[item-1]" id="row" @input="pushItemStyle(item-1)">
+        </div>
+
+        <div>
+          <label for="order">order</label>
+          <input
+            type="text"
+            v-model="order[item-1]"
+            id="order" @input="pushItemStyle(item-1)"
+            title="--1, 1++">
+        </div>
       </div>
+      <button @click="getCode">get code</button>
     </div>
 
     <div class="container container-relative" :style="container">
@@ -33,7 +70,7 @@
           @click="showItemsInput(item-1)"
         >{{item}}</div>
       </div>
-      <div class="items" v-for="item in 400" :key="item"></div>
+      <div class="items" v-for="(item, index) in countItems" :key="index"></div>
     </div>
   </div>
 </template>
@@ -42,12 +79,13 @@
 export default {
   data () {
     return {
-      columns: '20% 20% 20% 20% 20%',
-      rows: '20% 20% 20% 20% 20%',
+      columns: '20% 1fr 100px 20% 20%',
+      rows: '1fr 2fr 10%',
       gap: '0% 0%',
-      items: 0,
-      column: ['1 3', '2 3', '3'],
-      row: ['3', '1', '2'],
+      items: 1,
+      column: [],
+      row: [],
+      order: [],
       itemsStyle: [],
       itemsInput: [true, false, false]
     }
@@ -56,16 +94,29 @@ export default {
     pushItemStyle (item) {
         this.itemsStyle[item] = {
           'grid-column': this.column[item],
-          'grid-row': this.row[item]
+          'grid-row': this.row[item],
+          'order': this.order[item]
         }
-        console.log(this.itemsStyle)
     },
     showItemsInput (item) {
       for(let i = 0; i < this.items; i++){
-        this.itemsInput[i] = false
-        this.itemsInput[item] = true
+        this.$set(this.itemsInput, i, false)
+        this.$set(this.itemsInput, item, true)
       }
-      console.log(this.itemsInput)
+    },
+    getCode () {
+      console.log(this.itemsStyle)
+      let items = ''
+      for(let i = 0; i < this.itemsStyle.length; i++) {
+        if(this.itemsStyle[i]) {
+          items += '\n item' + i + " {"
+          if(this.itemsStyle[i]['grid-column'] !== undefined) items += '\n grid-column: ' + this.itemsStyle[i]['grid-column'] + ';'
+          if(this.itemsStyle[i]['grid-row'] !== undefined) items += '\n grid-row: ' + this.itemsStyle[i]['grid-row'] + ';'
+          if(this.itemsStyle[i]['order'] !== undefined) items += '\n order: ' + this.itemsStyle[i]['order'] + ';'
+          items += '\n }'
+        }
+      }
+      console.log(this.container, items)
     }
   },
   computed: {
@@ -76,12 +127,9 @@ export default {
         'grid-gap': this.gap
       }
     },
-    // itemsStyle () {
-    //   return {
-    //     'grid-column': this.column,
-    //     'grid-row': this.row
-    //   }
-    // },
+    countItems () {
+      return (this.columns.match(/\s+/g).length + 1) * (this.rows.match(/\s+/g).length + 1)
+    }, 
     numberItems () {
       return +this.items
     }
@@ -91,21 +139,36 @@ export default {
 </script>
 
 <style>
+h1{
+  text-align: center;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 10px;
   display: flex;
   justify-content: space-around;
+}
+h4{
+  margin: 0;
 }
 .writen-wrap{
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+}
+.writen-wrap__container{
+  width: 550px;
+  padding: 10px ;
+  border: 1px solid black;
+  margin-bottom: 20px;
+}
+.writen-wrap__container div{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .container{
   width: 500px;
@@ -131,18 +194,33 @@ export default {
 .items-green{
   background: green;
   border: 1px solid white;
-  line-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 input{
-  width: 400px;
+  width: 300px;
   padding: 5px 20px;
-  margin-bottom: 20px;
-  margin-top: 5px;
+  margin: 5px 0;
 }
-.items-imput{
+.writen-wrap__item{
+  padding: 10px ;
   border: 1px solid black;
   display: flex;
   flex-direction: column;
+  width: 550px;
 
+}
+.writen-wrap__item div{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+label{
+  cursor: pointer;
+}
+span{
+  margin-top: 10px;
 }
 </style>
