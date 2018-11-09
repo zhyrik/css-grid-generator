@@ -292,7 +292,6 @@ h3{
   margin-top: 100px;
 }
 .how-use{
-  white-space: pre;
   width: 450px;
   margin: 0 auto;
 }

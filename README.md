@@ -2,8 +2,8 @@
 
 > A Vue.js project
 
-# [Demo](http://vuejs.github.io/vue-loader)
-[Grid layout trenager](http://vuejs-templates.github.io/webpack/)
+# [Demo](https://css-grid-generator.firebaseapp.com/)
+[Grid layout trenager](https://css-grid-generator.firebaseapp.com/)
 
 # How to use
 
