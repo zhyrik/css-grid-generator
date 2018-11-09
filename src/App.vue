@@ -40,12 +40,22 @@
         <h4>.item{{item}}</h4>
         <div>
           <label for="column">grid-column</label>
-          <input type="text" v-model="column[item-1]" id="column" @input="pushItemStyle(item-1)">
+          <input
+            type="text"
+            v-model="column[item-1]"
+            id="column"
+            @input="pushItemStyle(item-1)"
+            title="n-start/n-end">
         </div>
 
         <div>
           <label for="row">grid-row</label>
-          <input type="text" v-model="row[item-1]" id="row" @input="pushItemStyle(item-1)">
+          <input
+            type="text"
+            v-model="row[item-1]"
+            id="row"
+            @input="pushItemStyle(item-1)"
+            title="n-start/n-end">
         </div>
 
         <div>
@@ -169,6 +179,7 @@ h1{
   margin-top: 10px;
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 h4{
   margin: 0;
@@ -275,5 +286,14 @@ button, .button{
 }
 button:hover, .button:hover{
   background: rgba(224, 192, 146, 0.952);
+}
+h3{
+  text-align: center;
+  margin-top: 100px;
+}
+.how-use{
+  white-space: pre;
+  width: 450px;
+  margin: 0 auto;
 }
 </style>
