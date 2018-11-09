@@ -13,7 +13,7 @@ Write the container fields:
 	grid-template-columns: ;
 	grid-template-rows: ;
 	grid-gap: ;
-Use ()
+Use (px, %, fr, em, auto, min-content, max-content, minmax) props.
 
 Warning! Do not use repeat(n, %) props.
 
@@ -29,6 +29,7 @@ write the items№ fields:
 	grid-column: ;
 	gird-row: ;
 	order: ;
+Use (n-start/n-end) props and number odder.
 
 # step 4 
 Get code.
