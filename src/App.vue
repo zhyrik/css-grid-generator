@@ -105,14 +105,14 @@ export default {
   },
   methods: {
     pushItemStyle (item) {
-        this.itemsStyle[item] = {
-          'grid-column': this.column[item],
-          'grid-row': this.row[item],
-          'order': this.order[item]
-        }
+      this.itemsStyle[item] = {
+        'grid-column': this.column[item],
+        'grid-row': this.row[item],
+        'order': this.order[item]
+      }
     },
     showItemsInput (item) {
-      for(let i = 0; i < this.items; i++){
+      for (let i = 0; i < this.items; i++) {
         this.$set(this.itemsInput, i, false)
         this.$set(this.itemsInput, item, true)
       }
@@ -125,12 +125,12 @@ export default {
   \t'grid-gap': ${this.gap}
   } \n`
       let items = ''
-      for(let i = 0; i < this.itemsStyle.length; i++) {
-        if(this.itemsStyle[i]) {
-          items += '\n item' + i + " {"
-          if(this.itemsStyle[i]['grid-column'] !== undefined) items += '\n \tgrid-column: ' + this.itemsStyle[i]['grid-column'] + ';'
-          if(this.itemsStyle[i]['grid-row'] !== undefined) items += '\n \tgrid-row: ' + this.itemsStyle[i]['grid-row'] + ';'
-          if(this.itemsStyle[i]['order'] !== undefined) items += '\n \torder: ' + this.itemsStyle[i]['order'] + ';'
+      for (let i = 0; i < this.itemsStyle.length; i++) {
+        if (this.itemsStyle[i]) {
+          items += '\n item' + i + ' {'
+          if (this.itemsStyle[i]['grid-column'] !== undefined) items += '\n \tgrid-column: ' + this.itemsStyle[i]['grid-column'] + ';'
+          if (this.itemsStyle[i]['grid-row'] !== undefined) items += '\n \tgrid-row: ' + this.itemsStyle[i]['grid-row'] + ';'
+          if (this.itemsStyle[i]['order'] !== undefined) items += '\n \torder: ' + this.itemsStyle[i]['order'] + ';'
           items += '\n }'
         }
       }
@@ -149,7 +149,7 @@ export default {
     },
     countItems () {
       return (this.columns.match(/\s+/g).length + 1) * (this.rows.match(/\s+/g).length + 1)
-    }, 
+    },
     numberItems () {
       return +this.items
     }
@@ -254,7 +254,7 @@ span{
   left: 0;
   right: 0;
   background: rgba(226, 216, 202, 0.952);
-  display: flex; 
+  display: flex;
   flex-direction: column;
   align-items: center;
 }
@@ -271,7 +271,7 @@ button, .button{
   font-size: 16px;
   text-decoration: none;
   color: black;
-  margin: 10px; 
+  margin: 10px;
 }
 button:hover, .button:hover{
   background: rgba(224, 192, 146, 0.952);
