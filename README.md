@@ -1,6 +1,38 @@
-# css-grid-trenager
+# CSS Grid Layout Generator
 
 > A Vue.js project
+
+# [Demo](http://vuejs.github.io/vue-loader)
+	[GRID LAYOUT GENERATOR](http://vuejs.github.io/vue-loader)
+
+# How to use
+
+``` bash
+# step 1
+Write the container fields:
+	grid-template-columns: ;
+	grid-template-rows: ;
+	grid-gap: ;
+Use ()
+
+Warning! Do not use repeat(n, %) props.
+
+# step 2
+Write the number of blocks
+
+Warning! Do not write more than the maximum number.
+
+# step 3
+Manipulate children by choosing green blocks.
+
+write the items№ fields:
+	grid-column: ;
+	gird-row: ;
+	order: ;
+
+# step 4 
+Get code.
+```
 
 ## Build Setup
 
