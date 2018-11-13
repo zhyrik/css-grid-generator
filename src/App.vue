@@ -137,7 +137,7 @@ export default {
       let items = ''
       for (let i = 0; i < this.itemsStyle.length; i++) {
         if (this.itemsStyle[i]) {
-          items += '\n item' + i + ' {'
+          items += '\n item' + (i + 1) + ' {'
           if (this.itemsStyle[i]['grid-column'] !== undefined) items += '\n \tgrid-column: ' + this.itemsStyle[i]['grid-column'] + ';'
           if (this.itemsStyle[i]['grid-row'] !== undefined) items += '\n \tgrid-row: ' + this.itemsStyle[i]['grid-row'] + ';'
           if (this.itemsStyle[i]['order'] !== undefined) items += '\n \torder: ' + this.itemsStyle[i]['order'] + ';'
@@ -158,7 +158,11 @@ export default {
       }
     },
     countItems () {
-      return (this.columns.match(/\s+/g).length + 1) * (this.rows.match(/\s+/g).length + 1)
+      const colRow = (count) => {
+        if (count === null) return 1
+        else return count.length + 1
+      }
+      return colRow(this.columns.match(/\s+/g)) * colRow(this.rows.match(/\s+/g))
     },
     numberItems () {
       return +this.items
